@@ -1,0 +1,136 @@
+/* AdminDashboard.css */
+
+.admin-dashboard {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fb;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .logout {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .logout:hover {
+    background-color: #e04343;
+  }
+  
+  .cards-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .card h3 {
+    font-size: 20px;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+    color: #555;
+  }
+  
+  .table td {
+    color: #777;
+  }
+  
+  .action-buttons button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-right: 5px;
+  }
+  
+  .action-buttons button:hover {
+    background-color: #45a049;
+  }
+  
+  .action-buttons button:last-child {
+    background-color: #f44336;
+  }
+  
+  .action-buttons button:last-child:hover {
+    background-color: #d32f2f;
+  }
+  
+  .pagination {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: #ddd;
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .pagination button:hover {
+    background-color: #bbb;
+  }
+  
+  .pagination button:disabled {
+    background-color: #f4f4f4;
+    cursor: not-allowed;
+  }
+  
