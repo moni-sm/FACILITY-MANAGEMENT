@@ -6,12 +6,14 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Login from './pages/Login';  
-import Signup from './pages/Signup';  
-import Profile from './pages/Profile'; 
+import ClientProfile from './pages/ClientProfile';
+import ProviderProfile from './pages/ProviderProfile';
+import SignupForm from './components/SignupForm';   
 import PrivateRoute from './components/PrivateRoute';  
 import Admin from './pages/Admin';
 import ServiceDetails from './components/ServiceDetails';
 import ServiceList from './components/ServiceList';
+import ForgotPassword from './components/ForgetPassword';
 
 const App = () => {
   return (
@@ -24,8 +26,10 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/client-profile" element={<ClientProfile />} />
+          <Route path="/provider-profile" element={<ProviderProfile />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/services" element={<ServiceList />} />
           <Route path="services/:id" element={<ServiceDetails />} />
 

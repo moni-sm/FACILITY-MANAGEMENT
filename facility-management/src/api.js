@@ -1,6 +1,6 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000'; // Local proxy server
 
-// Helper function to handle responses and errors
+// Helper function to handle API responses and errors
 const handleResponse = async (response) => {
   if (!response.ok) {
     const errorMessage = await response.text();
@@ -8,7 +8,7 @@ const handleResponse = async (response) => {
   }
 
   try {
-    // Try parsing the response as JSON
+  
     return await response.json();
   } catch (e) {
     // If response is not JSON, return null
@@ -25,7 +25,7 @@ export const registerUser = async (userData) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
     });
-    return await handleResponse(response); // Handle the response data
+    return await handleResponse(response); 
   } catch (error) {
     console.error("Error registering user:", error);
     throw new Error("An error occurred while registering. Please try again.");
@@ -40,7 +40,7 @@ export const loginUser = async (credentials) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    return await handleResponse(response); // Handle the response data
+    return await handleResponse(response); // Process the response
   } catch (error) {
     console.error("Error logging in:", error);
     throw new Error("An error occurred while logging in. Please check your credentials.");
@@ -51,7 +51,7 @@ export const loginUser = async (credentials) => {
 export const fetchServices = async () => {
   try {
     const response = await fetch(`${BASE_URL}/api/services`);
-    return await handleResponse(response); // Handle the response data
+    return await handleResponse(response); // Process the response
   } catch (error) {
     console.error("Error fetching services:", error);
     throw new Error("An error occurred while fetching services. Please try again later.");

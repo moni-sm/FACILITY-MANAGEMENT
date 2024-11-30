@@ -1,34 +1,30 @@
-import React, { useState, useEffect, Children } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import '../styles/main.css';
+import '../styles/SignupForm.css'; // Reuse the SignupForm CSS
 
 export const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const [error, setError] = useState(null); // State for error message
-  const [isLoading, setIsLoading] = useState(false); // To manage loading state
-  const navigate = useNavigate();  // To redirect after login
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if there's a valid token already stored
     const token = localStorage.getItem('token');
     console.log("tocken",token);
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        // Check if the token is expired
         if (decoded.exp * 1000 > Date.now()) {
-          // navigate('/Profile'); // Redirect to profile page if token is valid
+          navigate('/Profile');
         } else {
-          // Optionally, clear the token if expired
           localStorage.removeItem('token');
         }
       } catch (error) {
-        // Handle any errors during token decoding (invalid token format)
         console.error('Invalid token', error);
         localStorage.removeItem('token');
       }
@@ -36,13 +32,17 @@ export const LoginForm = () => {
   }, [navigate]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: [e.target.value] });
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(null); // Reset previous errors
+    setError(null);
 
     // Basic client-side validation
     if (!formData.email || !formData.password) {
@@ -65,8 +65,8 @@ export const LoginForm = () => {
       console.log('formData',formData);
       // Send login request to backend
       const reqPayload= {};
-      reqPayload.email=formData.email[0];
-      reqPayload.password=formData.password[0];
+      reqPayload.email=formData.email;
+      reqPayload.password=formData.password;
       console.log("payload",reqPayload);
     
       const response = await axios.post('http://localhost:5000/api/auth/login',{
@@ -80,30 +80,40 @@ export const LoginForm = () => {
       console.log('Login success:', response.data);
       localStorage.setItem('token', response.data.token);
       alert('Login successful!');
-      navigate('/Profile');  
+
+      // Navigate based on user role
+      const userRole = response.data.role;
+      if (userRole === 'provider') {
+        navigate('/providerprofile');
+      } else if (userRole === 'client') {
+        navigate('/clientprofile');
+      } else {
+        navigate('/Profile');
+      }
     } catch (error) {
-      console.error('Login failed with error:', error);
       const errorMessage = error.response?.data?.message || 'Login failed. Please try again.';
       setError(errorMessage);
-    }
-     finally {
-      setIsLoading(false);  // Hide loader after request completion
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return (
-    <div className="login-form-container">
-      <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        
-        {error && <p className="error-message">{error}</p>} {/* Display error message */}
+  const navigateToSignup = () => navigate('/signup');
+  const navigateToForgotPassword = () => navigate('/forgotpassword');
 
+  return (
+    <div className="signup-form-container">
+      <form className="signup-form" onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>}
         <input
           type="email"
           name="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
+          className="input-field"
+          required
         />
         <input
           type="password"
@@ -111,11 +121,16 @@ export const LoginForm = () => {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
+          className="input-field"
+          required
         />
-        
-        <button type="submit" disabled={isLoading}> {/* Disable button during loading */}
+        <button type="submit" className="submit-button" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
+        <div className="form-links">
+          <button type="button" onClick={navigateToSignup} className="link-button">Create an Account</button>
+          <button type="button" onClick={navigateToForgotPassword} className="link-button">Forgot Password?</button>
+        </div>
       </form>
     </div>
   );
